@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Classroom Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial; text-align: center; background:#f4f6f9; }
+        table { margin:auto; border-collapse: collapse; width:70%; background:white;}
+        th, td { padding:10px; border:1px solid #ddd; }
+        th { background:#2c3e50; color:white; }
+        .low { background-color:#ffcccc; }
+        .medium { background-color:#fff3cd; }
+        .high { background-color:#d4edda; }
+        button { padding:10px 15px; margin:15px; cursor:pointer; }
+    </style>
+</head>
+<body>
+
+<h2>📊 Classroom Attention Dashboard</h2>
+
+<a href="/export"><button>Download CSV Report</button></a>
+
+<table>
+    <tr>
+        <th>Roll</th>
+        <th>Name</th>
+        <th>Attention %</th>
+    </tr>
+    {% for s in students %}
+    <tr class="{% if s[2] < 40 %}low{% elif s[2] < 60 %}medium{% else %}high{% endif %}">
+        <td>{{ s[0] }}</td>
+        <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br><br>
+
+<canvas id="attentionChart" width="600" height="300"></canvas>
+
+<script>
+var ctx = document.getElementById('attentionChart').getContext('2d');
+
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for s in students %}'{{ s[1] }}',{% endfor %}],
+        datasets: [{
+            label: 'Attention %',
+            data: [{% for s in students %}{{ s[2] }},{% endfor %}],
+        }]
+    }
+});
+</script>
+
+</body>
+</html>
