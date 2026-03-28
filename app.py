@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# HOME PAGE (new)
+# HOME PAGE 
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -16,6 +16,21 @@ def login():
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
+
+
+@app.route("/upload_video")
+def upload_video():
+    return render_template("upload_video.html")
+
+
+@app.route("/analytics")
+def analytics():
+    return render_template("analytics.html")
+
+
+@app.route("/students_report")
+def students_report():
+    return render_template("students_report.html")
 
 
 @app.route("/video_result")
